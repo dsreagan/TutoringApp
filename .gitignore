@@ -4,3 +4,7 @@ env/
 # ignore pycache folder and all .pyc files
 __pycache__/
 *.pyc
+
+# Flask stuff:
+instance/
+.webassets-cache

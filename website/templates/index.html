@@ -184,42 +184,19 @@
                 <h2 class="section-heading text-uppercase">Our Tutors</h2>
                 <h3 class="section-subheading text-muted">Find your favorite tutor!</h3>
             </div>
-            <div class="row">
+        <div class="row" style="width: 1350px; height: 800px; line-height: 5em; overflow:auto;">
+            {% for tutor in tutor_all %}
                 <div class="col-lg-4">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="../static/assets/img/team/1.jpg" alt="..." />
-                        <h4>John Smith</h4>
-                        <p class="text-muted">Expertise: Math, Science</p>
-                        <p class="text-muted">About Me: I do not exist</p>
-
+                        <div class="Tutors">
+                            <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
+                            <h3 style="font-weight:normal">{{tutor.id}}</h3>
+                            <h3 style="font-weight:normal">{{tutor.email}}</h3>
+                            <h3 style="font-weight:normal">{{tutor.phone_number}}</h3>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="../static/assets/img/team/4.jpg" alt="..." />
-                        <h4>Olivia James</h4>
-                        <p class="text-muted">Expertise: Science, English</p>
-                        <p class="text-muted">About Me: I do not exist</p>
-
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="../static/assets/img/team/3.jpg" alt="..." />
-                        <h4>Bob Man</h4>
-                        <p class="text-muted">Expertise: Computer Science</p>
-                        <p class="text-muted">About Me: I do not exist</p>
-
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="../static/assets/img/team/2.jpg" alt="..." />
-                        <h4>Person Dude</h4>
-                        <p class="text-muted">Expertise: Engineering, History</p>
-                        <p class="text-muted">About Me: I do not exist</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Want to help your fellow peers? Sign up to be a tutor today!</p></div>

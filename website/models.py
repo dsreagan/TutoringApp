@@ -8,8 +8,9 @@ class Student(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     phone_number = db.Column(db.String(20))
-    # Not sure if needed
-    appointments = db.relationship('Appointment')
+    total_hours = db.Column(db.Float)
+    fav_tutors = db.Column(db.ARRAY(db.String(250)))
+    appointments = db.relationship('Appointment', backref='student')
 
 class Tutor(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,11 +19,17 @@ class Tutor(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     phone_number = db.Column(db.String(20))
-    # Not sure if needed
-    appointments = db.relationship('Appointment')
+    subjects = db.Column(db.ARRAY(db.String(20)))
+    total_hours = db.Column(db.Float)
+    profile_pic = db.Column(db.Text)
+    bio = db.Column(db.Text)
+    appointments = db.relationship('Appointment', backref='tutor')
 
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime())
+    date = db.Column(db.Date)
+    time = db.column(db.Time)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
     tutor_id = db.Column(db.Integer, db.ForeignKey('tutor.id'))
+    appointment_info = db.Column(db.Text)
+    zoom_link = db.Column(db.Text)

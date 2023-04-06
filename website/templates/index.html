@@ -192,15 +192,19 @@
             </form>
         </div>
         <!--display all and search-->
-        <div class="row" style="line-height: 5em; overflow:auto; margin: auto; height:200px" >
+        <div class="row" style="line-height: 5em; overflow:auto; margin: auto; height:350px" >
             {% for tutor in tutor_all %}
                 <div class="col-lg-4">
                     <div class="team-member">
                         <div class="Tutors">
+                            <h3>{{tutor.profile_pic}}</h3>
                             <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
                             <h3 style="font-weight:normal">{{tutor.id}}</h3>
                             <h3 style="font-weight:normal">{{tutor.email}}</h3>
                             <h3 style="font-weight:normal">{{tutor.phone_number}}</h3>
+                            <h3 style="font-weight:normal">Subjects: {{tutor.subjects}}</h3>
+                            <h3 style="font-weight:normal">Total Tutor Hours: {{tutor.total_hours}}</h3>
+                            <h3 style="font-weight:normal">Bio: {{tutor.bio}}</h3>
                         </div>
                     </div>
                 </div>

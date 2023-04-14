@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="../static/css/styles.css" rel="stylesheet" />
+    <title>Student Registration</title>
+  </head>
+
+  <body class="bg-dark">
+    <div class="container">
+      <a href="/" class="btn btn-outline-warning btn-lg text-uppercase pe-auto mt-4">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        Go Back
+      </a>
+      <div class="row mt-5">
+        <div class="col-lg-5 bg-white m-auto shadow p-4 mb-5 bg-white rounded">
+          <h2 class="text-center pt-3 mb-4">Student Registration</h2>
+          <!-- Start of Form -->
+          <form method="POST" enctype="multipart/form-data">
+            <!-- Account information -->
+            <div class="input-group mb-4">
+              <span class="input-group-text"><i class="fa fa-user"></i></span>
+              <input type="text" class="form-control" name="firstName" placeholder="First Name" required />
+            </div>
+            <div class="input-group mb-4">
+              <span class="input-group-text"><i class="fa fa-user"></i></span>
+              <input type="text" class="form-control" name="lastName" placeholder="Last Name" required />
+            </div>
+            <div class="input-group mb-4">
+              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Email@example.com"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                title="example@example.example"
+                required
+              />
+            </div>
+            <div class="input-group mb-4">
+              <span class="input-group-text"><i class="fa fa-phone"></i></span>
+              <input
+                type="tel"
+                class="form-control"
+                name="phoneNumber"
+                placeholder="Phone ex: 1234567890"
+                pattern="[0-9]{10}"
+                title="Only 10 Numbers"
+                required
+              />
+            </div>
+            <div class="input-group mb-4">
+              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+              <input type="password" class="form-control" name="password" placeholder="Password" required />
+            </div>
+            <div class="input-group mb-4">
+              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+              <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required />
+            </div>
+
+            <!-- Register Button -->
+            <div class="text-center mb-4">
+              <input class="btn btn-primary btn-xl text-uppercase pe-auto" type="submit" value="Sign Up" />
+            </div>
+            <p class="text-center">Already have an account? <a href="#"> Login Here </a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="../static/js/scripts.js"></script>
+  </body>
+</html>

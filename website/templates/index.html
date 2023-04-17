@@ -70,10 +70,42 @@
     </header>
     <!-- Services-->
     <section class="page-section" id="services">
+
       <div class="container">
         <div class="text-center">
           <h2 class="section-heading text-uppercase">Services</h2>
           <h3 class="section-subheading text-muted">What we can do for you!</h3>
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Services</h2>
+                <h3 class="section-subheading text-muted">What we can do for you!</h3>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img class="mx-auto rounded-circle" src="../static/assets/img/world.jpg" alt="..." width="150" height="150"/>
+                        <!--<i class="fas fa-circle fa-stack-2x text-primary"></i>-->
+                        <!--<i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>-->
+                    </span>
+                    <h4 class="my-3">Get Connected</h4>
+                    <p class="text-muted">Get access to a world wide group of experts waiting to assist your studies.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img class="mx-auto rounded-circle" src="../static/assets/img/people.jpg" alt="..." width="150" height="150"/>
+                    </span>
+                    <h4 class="my-3">Find a tutor</h4>
+                    <p class="text-muted">Find favorite tutors specific to your needs and learning style.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <img class="mx-auto rounded-circle" src="../static/assets/img/computer.jpg" alt="..." width="150" height="150"/>
+                    </span>
+                    <h4 class="my-3">Create an appointment</h4>
+                    <p class="text-muted">Schedule personal online tutoring appointments with your favorite tutors today!  </p>
+                </div>
+            </div>
+
         </div>
         <div class="row text-center">
           <div class="col-md-4">
@@ -213,6 +245,7 @@
               <p class="text-muted">Expertise: Math, Science</p>
               <p class="text-muted">About Me: I do not exist</p>
             </div>
+
           </div>
           <div class="col-lg-4">
             <div class="team-member">
@@ -228,6 +261,29 @@
               <h4>Bob Man</h4>
               <p class="text-muted">Expertise: Computer Science</p>
               <p class="text-muted">About Me: I do not exist</p>
+
+        <!--Search formating-->
+        <div style="text-align: center; height:100px">
+            <form class="form-inline my-2 my-lg-0" method="GET" action="" style="margin:auto">
+                <input type="search" placeholder="Search Tutor by name, ID, or subject" name="tutor_search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <!--display all and search-->
+        <div class="row" style="line-height: 5em; overflow:auto; margin: auto">
+            {% for tutor in tutor_all %}
+                <div class="col-lg-4">
+                    <div class="team-member">
+                        <div class="Tutors">
+                            <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
+                            <h3 style="font-weight:normal">{{tutor.id}}</h3>
+                            <h3 style="font-weight:normal">{{tutor.email}}</h3>
+                            <h3 style="font-weight:normal">{{tutor.phone_number}}</h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
             </div>
           </div>
           <div class="col-lg-4">

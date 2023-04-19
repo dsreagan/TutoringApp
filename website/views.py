@@ -5,6 +5,12 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def index():
+    return render_template('index.html')
+
+@views.route('/registered')
+def registered():
+    return render_template('registered.html')
+
     tutor_search = request.args.get('tutor_search')
     if tutor_search:
         tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search))

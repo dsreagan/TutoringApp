@@ -8,9 +8,9 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
 def login():
-    return "<p>Login</p>"
+    return render_template('login.html')
 
-@auth.route('/tutorRegistration', methods=['GET', 'POST'])
+@auth.route('/tutor-registration', methods=['GET', 'POST'])
 def tutorRegistration():
     if request.method == 'POST':
         firstName = request.form.get('firstName')
@@ -52,9 +52,9 @@ def tutorRegistration():
             db.session.commit()
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
-    return render_template('tutorRegistration.html')
+    return render_template('tutor-registration.html')
 
-@auth.route('/studentRegistration', methods=['GET', 'POST'])
+@auth.route('/student-registration', methods=['GET', 'POST'])
 def studentRegistration():
     if request.method == 'POST':
         firstName = request.form.get('firstName')
@@ -80,4 +80,4 @@ def studentRegistration():
             db.session.commit()
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
-    return render_template('studentRegistration.html')
+    return render_template('student-registration.html')

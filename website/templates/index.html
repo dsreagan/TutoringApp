@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Classroom Connect Tutors</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../static/css/styles.css" rel="stylesheet" />
-  </head>
+{% extends "base.html" %}
+
+{% block body %}
   <body id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -38,7 +23,7 @@
             <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
             <li class="nav-item"><a class="nav-link" href="#portfolio">Subjects</a></li>
             <li class="nav-item"><a class="nav-link" href="#team">Tutors</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contact">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a></li>
             <li class="nav-item dropdown">
               <a
                 class="btn btn-dark dropdown-toggle"
@@ -51,9 +36,9 @@
                 Register
               </a>
               <div class="dropdown-menu dropdown-menu-dark">
-                <a href="/studentRegistration" class="dropdown-item">As a Student</a>
+                <a href="/student-registration" class="dropdown-item">As a Student</a>
                 <div class="dropdown-divider"></div>
-                <a href="/tutorRegistration" class="dropdown-item">As a Tutor</a>
+                <a href="/tutor-registration" class="dropdown-item">As a Tutor</a>
               </div>
             </li>
           </ul>
@@ -75,35 +60,6 @@
         <div class="text-center">
           <h2 class="section-heading text-uppercase">Services</h2>
           <h3 class="section-subheading text-muted">What we can do for you!</h3>
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Services</h2>
-                <h3 class="section-subheading text-muted">What we can do for you!</h3>
-            </div>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <img class="mx-auto rounded-circle" src="../static/assets/img/world.jpg" alt="..." width="150" height="150"/>
-                    </span>
-                    <h4 class="my-3">Get Connected</h4>
-                    <p class="text-muted">Get access to a world wide group of experts waiting to assist your studies.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <img class="mx-auto rounded-circle" src="../static/assets/img/people.jpg" alt="..." width="150" height="150"/>
-                    </span>
-                    <h4 class="my-3">Find a tutor</h4>
-                    <p class="text-muted">Find favorite tutors specific to your needs and learning style.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <img class="mx-auto rounded-circle" src="../static/assets/img/computer.jpg" alt="..." width="150" height="150"/>
-                    </span>
-                    <h4 class="my-3">Create an appointment</h4>
-                    <p class="text-muted">Schedule personal online tutoring appointments with your favorite tutors today!  </p>
-                </div>
-            </div>
-
         </div>
         <div class="row text-center">
           <div class="col-md-4">
@@ -305,10 +261,10 @@
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Login</h2>
                 <h3 class="section-subheading text-muted">or sign up now!</h3>
-                <a href="{{url_for('views.userHome')}}">  
-                    <button>User</button>  
+                <a href="{{url_for('views.student_home')}}">  
+                    <button>Student</button>  
                 </a>
-                <a href="{{url_for('views.tutorHome')}}">  
+                <a href="{{url_for('views.tutor_home')}}">  
                     <button>Tutor</button>  
                 </a>
             </div>
@@ -392,4 +348,5 @@
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
   </body>
+  {% endblock %}
 </html>

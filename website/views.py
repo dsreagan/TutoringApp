@@ -18,15 +18,15 @@ def registered():
         tutor_all = Tutor.query.all()
     return render_template('index.html', tutor_all=tutor_all)
 
-@views.route('/userHome')
-def userHome():
-    tutor_search = request.args.get('tutor_search')
-    if tutor_search:
-        tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search))
-    else:
-        tutor_all = Tutor.query.all()
-    return render_template('userHome.html', tutor_all=tutor_all)
+@views.route('/student')
+def student_home():
+    # tutor_search = request.args.get('tutor_search')
+    # if tutor_search:
+    #     tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search))
+    # else:
+    #     tutor_all = Tutor.query.all()
+    return render_template('student-home.html')#, tutor_all=tutor_all)
 
-@views.route('/tutorHome')
-def tutorHome():
-    return render_template('tutorHome.html')
+@views.route('/tutor')
+def tutor_home():
+    return render_template('tutor-home.html')

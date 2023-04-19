@@ -8,3 +8,5 @@ Conventions:
 html -> login-page.html
 
 python functions -> login_function()
+
+python variables -> my_var

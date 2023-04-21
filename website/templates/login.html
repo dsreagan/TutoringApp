@@ -2,8 +2,11 @@
 
   {% block title %}Login{% endblock %}
 
-  {%block body %}
+  {% block body_tag %}
   <body class="bg-dark">
+  {% endblock %}
+
+    {%block body_content %}
     <div class="container">
       <a href="/" class="btn btn-outline-warning btn-lg text-uppercase pe-auto mt-4">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -35,13 +38,11 @@
             </div>
             <p class="text-center">Don't have an account?<br/>
                 Register as a: <br/>
-                <a href="student-registration">Student</a><br/>
-                <a href="tutor-registration">Tutor</a>
+                <a href="{{ url_for('auth.tutor_registration') }}">Student</a><br/>
+                <a href="{{ url_for('auth.student_registration') }}">Tutor</a>
             </p>
           </form>
         </div>
       </div>
     </div>
-    <script src="../static/js/scripts.js"></script>
-  </body>
   {% endblock %}

@@ -6,12 +6,61 @@ import json
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        student = Student.query.filter_by(email=email).first()
+        tutor = Tutor.query.filter_by(email=email).first()
+        if student:
+            if check_password_hash(student.password, password):
+                flash('Logged in successfully!', category='success')
+                return redirect(url_for('views.student_home'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        elif tutor:
+            if check_password_hash(tutor.password, password):
+                flash('Logged in successfully!', category='success')
+                return redirect(url_for('views.tutor_home'))
+            else:
+                flash('Incorrect password, try again.', category='error')
+        else:
+            flash('Email does not exist.', category='error')
+
     return render_template('login.html')
 
+@auth.route('/student-registration', methods=['GET', 'POST'])
+def student_registration():
+    if request.method == 'POST':
+        firstName = request.form.get('firstName')
+        lastName = request.form.get('lastName')
+        email = request.form.get('email')
+        phoneNumber = request.form.get('phoneNumber')
+        password = request.form.get('password')
+        confirmPassword = request.form.get('confirmPassword')
+
+        if len(email) < 4:
+            flash('Email must be greater than 3 characters.', category='error')
+        elif len(firstName) < 2:
+            flash('First name must be greater than 1 character.', category='error')
+        elif password != confirmPassword:
+            flash('Passwords don\'t match.', category='error')
+        elif len(password) < 7:
+            flash('Email must be at least 7 characters', category='error')
+        else:
+            new_student = Student(first_name=firstName, last_name=lastName, email=email,
+                                   password=generate_password_hash(password, method='sha256'),
+                                   phone_number=phoneNumber, total_hours=0, fav_tutors='')
+            db.session.add(new_student)
+            db.session.commit()
+            flash('Account created!', category='success')
+            return redirect(url_for('views.registered'))
+    return render_template('student-registration.html')
+
 @auth.route('/tutor-registration', methods=['GET', 'POST'])
-def tutorRegistration():
+def tutor_registration():
     if request.method == 'POST':
         firstName = request.form.get('firstName')
         lastName = request.form.get('lastName')
@@ -53,31 +102,3 @@ def tutorRegistration():
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
     return render_template('tutor-registration.html')
-
-@auth.route('/student-registration', methods=['GET', 'POST'])
-def studentRegistration():
-    if request.method == 'POST':
-        firstName = request.form.get('firstName')
-        lastName = request.form.get('lastName')
-        email = request.form.get('email')
-        phoneNumber = request.form.get('phoneNumber')
-        password = request.form.get('password')
-        confirmPassword = request.form.get('confirmPassword')
-
-        if len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(firstName) < 2:
-            flash('First name must be greater than 1 character.', category='error')
-        elif password != confirmPassword:
-            flash('Password don\'t match.', category='error')
-        elif len(password) < 7:
-            flash('Email must be at least 7 characters', category='error')
-        else:
-            new_student = Student(first_name=firstName, last_name=lastName, email=email,
-                                   password=generate_password_hash(password, method='sha256'),
-                                   phone_number=phoneNumber, total_hours=0, fav_tutors='')
-            db.session.add(new_student)
-            db.session.commit()
-            flash('Account created!', category='success')
-            return redirect(url_for('views.registered'))
-    return render_template('student-registration.html')

@@ -5,13 +5,16 @@
   {% endblock %}
   {% block title %}Student Registration{% endblock %}
 
-  {%block body %}
+  {% block body_tag %}
   <body class="bg-dark">
+  {% endblock %}
+
+    {% block body_content %}
     <div class="container">
-      <a href="/" class="btn btn-outline-warning btn-lg text-uppercase pe-auto mt-4">
+      <!-- <a href="/" class="btn btn-outline-warning btn-lg text-uppercase pe-auto mt-4">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
         Go Back
-      </a>
+      </a> -->
       <div class="row mt-5">
         <div class="col-lg-5 bg-white m-auto shadow p-4 mb-5 bg-white rounded">
           <h2 class="text-center pt-3 mb-4">Student Registration</h2>
@@ -68,6 +71,4 @@
         </div>
       </div>
     </div>
-    <script src="../static/js/scripts.js"></script>
-  </body>
   {% endblock %}

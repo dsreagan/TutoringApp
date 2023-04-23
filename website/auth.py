@@ -32,13 +32,13 @@ def login():
         else:
             flash('Email does not exist.', category='error')
 
-    return render_template('login.html')
+    return render_template('login.html', user=current_user)
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('views.index'))
+    return redirect(url_for('views.index', user=current_user))
 
 @auth.route('/student-registration', methods=['GET', 'POST'])
 def student_registration():
@@ -67,10 +67,10 @@ def student_registration():
                                    phone_number=phoneNumber, total_hours=0, fav_tutors='')
             db.session.add(new_student)
             db.session.commit()
-            login_user(student, remember=True)
+            login_user(new_student, remember=True)
             flash('Account created!', category='success')
             return redirect(url_for('views.student_home'))
-    return render_template('student-registration.html')
+    return render_template('student-registration.html', user=current_user)
 
 @auth.route('/tutor-registration', methods=['GET', 'POST'])
 def tutor_registration():
@@ -115,7 +115,7 @@ def tutor_registration():
                                 profile_pic=profilePic.read(), bio = aboutMe)
             db.session.add(new_tutor)
             db.session.commit()
-            login_user(tutor, remember=True)
+            login_user(new_tutor, remember=True)
             flash('Account created!', category='success')
             return redirect(url_for('views.tutor_home'))
-    return render_template('tutor-registration.html')
+    return render_template('tutor-registration.html', user=current_user)

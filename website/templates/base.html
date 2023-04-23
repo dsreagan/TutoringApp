@@ -41,6 +41,7 @@
             <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
             <li class="nav-item"><a class="nav-link" href="#portfolio">Subjects</a></li>
             <li class="nav-item"><a class="nav-link" href="#team">Tutors</a></li>
+            {% if not user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a></li>
             <li class="nav-item dropdown">
               <a
@@ -58,6 +59,9 @@
                 <a href="{{ url_for('auth.tutor_registration') }}" class="dropdown-item">As a Tutor</a>
               </div>
             </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>

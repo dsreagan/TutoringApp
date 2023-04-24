@@ -1,74 +1,116 @@
-{% extends "base.html" %}
-
-  {% block head %}
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  {% endblock %}
-  {% block title %}Student Registration{% endblock %}
-
-  {% block body_tag %}
-  <body class="bg-dark">
-  {% endblock %}
-
-    {% block body_content %}
-    <div class="container">
-      <!-- <a href="/" class="btn btn-outline-warning btn-lg text-uppercase pe-auto mt-4">
+{% extends "base.html" %} {% block head %}
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+{% endblock %} {% block title %}Student Registration{% endblock %} {% block body_tag %}
+<body class="bg-dark">
+  {% endblock %} {% block body_content %}
+  <div class="container">
+    <!-- <a href="/" class="btn btn-outline-warning btn-lg text-uppercase pe-auto mt-4">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
         Go Back
       </a> -->
-      <div class="row mt-5">
-        <div class="col-lg-5 bg-white m-auto shadow p-4 mb-5 bg-white rounded">
-          <h2 class="text-center pt-3 mb-4">Student Registration</h2>
-          <!-- Start of Form -->
-          <form method="POST" enctype="multipart/form-data">
-            <!-- Account information -->
-            <div class="input-group mb-4">
-              <span class="input-group-text"><i class="fa fa-user"></i></span>
-              <input type="text" class="form-control" name="firstName" placeholder="First Name" required />
-            </div>
-            <div class="input-group mb-4">
-              <span class="input-group-text"><i class="fa fa-user"></i></span>
-              <input type="text" class="form-control" name="lastName" placeholder="Last Name" required />
-            </div>
-            <div class="input-group mb-4">
-              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                placeholder="Email@example.com"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                title="example@example.example"
-                required
-              />
-            </div>
-            <div class="input-group mb-4">
-              <span class="input-group-text"><i class="fa fa-phone"></i></span>
-              <input
-                type="tel"
-                class="form-control"
-                name="phoneNumber"
-                placeholder="Phone ex: 1234567890"
-                pattern="[0-9]{10}"
-                title="Only 10 Numbers"
-                required
-              />
-            </div>
-            <div class="input-group mb-4">
-              <span class="input-group-text"><i class="fa fa-lock"></i></span>
-              <input type="password" class="form-control" name="password" placeholder="Password" required />
-            </div>
-            <div class="input-group mb-4">
-              <span class="input-group-text"><i class="fa fa-lock"></i></span>
-              <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required />
-            </div>
-
-            <!-- Register Button -->
-            <div class="text-center mb-4">
-              <input class="btn btn-primary btn-xl text-uppercase pe-auto" type="submit" value="Sign Up" />
-            </div>
-            <p class="text-center">Already have an account? Log In <a href="{{ url_for('auth.login') }}">Here</a></p>
-          </form>
-        </div>
+    <div class="row mt-5">
+      <div class="col-lg-5 bg-white m-auto shadow mt-5 p-4 mb-5 bg-white rounded">
+        <h2 class="text-center pt-3 mb-4">Student Registration</h2>
+        <!-- Start of Form -->
+        <form method="POST" enctype="multipart/form-data">
+          <!-- Account information -->
+          {% for e in errors["firstName"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
+          <div class="input-group mb-4">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input
+              type="text"
+              class="form-control"
+              name="firstName"
+              value="{{request.form['firstName']}}"
+              placeholder="First Name"
+              pattern="[A-Za-z]{1,20}"
+              required
+            />
+          </div>
+          {% for e in errors["lastName"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
+          <div class="input-group mb-4">
+            <span class="input-group-text"><i class="fa fa-user"></i></span>
+            <input
+              type="text"
+              class="form-control"
+              name="lastName"
+              value="{{request.form['lastName']}}"
+              placeholder="Last Name"
+              pattern="[A-Za-z]{1,20}"
+              required
+            />
+          </div>
+          {% for e in errors["email"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
+          <div class="input-group mb-4">
+            <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              value="{{request.form['email']}}"
+              placeholder="Email@example.com"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              title="example@example.example"
+              required
+            />
+          </div>
+          {% for e in errors["phoneNumber"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
+          <div class="input-group mb-4">
+            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+            <input
+              type="tel"
+              class="form-control"
+              name="phoneNumber"
+              value="{{request.form['phoneNumber']}}"
+              placeholder="Phone ex: 1234567890"
+              pattern="[0-9]{10}"
+              title="Only 10 Numbers"
+              required
+            />
+          </div>
+          {% for e in errors["password"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
+          <div class="input-group mb-2">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            <input
+              id="studentPassword"
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Password"
+              onkeyup="validateStudent()"
+              required
+            />
+          </div>
+          <ul class="requirements">
+            <li id="upperCheckS">Must have an uppercase character</li>
+            <li id="numberCheckS">Must have a number</li>
+            <li id="specialCheckS">Must have a special character !@#$%^&*()</li>
+          </ul>
+          {% for e in errors["confirmPassword"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
+          <div class="input-group mb-4">
+            <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required />
+          </div>
+          <!-- Register Button -->
+          <div class="text-center mb-4">
+            <input class="btn btn-primary btn-xl text-uppercase pe-auto" type="submit" value="Sign Up" />
+          </div>
+          <p class="text-center">Already have an account? Log In <a href="{{ url_for('auth.login') }}">Here</a></p>
+        </form>
       </div>
     </div>
+  </div>
   {% endblock %}
+</body>

@@ -3,6 +3,7 @@ from .models import Student, Tutor
 from werkzeug.security import generate_password_hash,  check_password_hash
 from . import db
 import json
+import re
 
 auth = Blueprint('auth', __name__)
 
@@ -33,6 +34,7 @@ def login():
 
 @auth.route('/student-registration', methods=['GET', 'POST'])
 def student_registration():
+    errors = {}
     if request.method == 'POST':
         firstName = request.form.get('firstName')
         lastName = request.form.get('lastName')
@@ -41,14 +43,27 @@ def student_registration():
         password = request.form.get('password')
         confirmPassword = request.form.get('confirmPassword')
 
-        if len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(firstName) < 2:
-            flash('First name must be greater than 1 character.', category='error')
+        studentEmailExists = Student.query.filter_by(email=email).first()
+        tutorEmailExists = Tutor.query.filter_by(email=email).first()
+
+        if not (firstName or firstName.isalpha()):
+            errors["firstName"] = ["First name required and alphabet only"]
+        elif not (lastName or lastName.isalpha()):
+            errors["lastName"] = ["Last name required and alphabet only"]
+        elif not re.match(r'^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$', email):
+            errors["email"] = ["Email incorrect format"]
+        elif studentEmailExists or tutorEmailExists:
+            errors["email"] = ["Email already exists"]
+        elif not phoneNumber:
+            errors["phoneNumber"] = ["Phone number required"]
+        elif not re.match(r'^\d{10}$', phoneNumber):
+            errors["phoneNumber"] = ["Phone number should be 10 digits no dashes"]
+        elif not password:
+            errors["password"] = ["Password cannot be empty"]
+        elif not re.match(r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).+$', password):
+            errors["password"] = ["Password does not follow rules"]
         elif password != confirmPassword:
-            flash('Passwords don\'t match.', category='error')
-        elif len(password) < 7:
-            flash('Email must be at least 7 characters', category='error')
+            errors["confirmPassword"] = ["Passwords do not match"]
         else:
             new_student = Student(first_name=firstName, last_name=lastName, email=email,
                                    password=generate_password_hash(password, method='sha256'),
@@ -57,10 +72,11 @@ def student_registration():
             db.session.commit()
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
-    return render_template('student-registration.html')
+    return render_template('student-registration.html', errors=errors)
 
 @auth.route('/tutor-registration', methods=['GET', 'POST'])
 def tutor_registration():
+    errors = {}
     if request.method == 'POST':
         firstName = request.form.get('firstName')
         lastName = request.form.get('lastName')
@@ -78,16 +94,34 @@ def tutor_registration():
         saturdayTime = json.dumps(request.form.getlist('saturdayTime'))
         sundayTime = json.dumps(request.form.getlist('sundayTime'))
         profilePic = request.files['file']
-        aboutMe = request.form.get('about')
+        about = request.form.get('about')
 
-        if len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif len(firstName) < 2:
-            flash('First name must be greater than 1 character.', category='error')
+        studentEmailExists = Student.query.filter_by(email=email).first()
+        tutorEmailExists = Tutor.query.filter_by(email=email).first()
+
+        if not (firstName or firstName.isalpha()):
+            errors["firstName"] = ["First name required and alphabet only"]
+        elif not (lastName or lastName.isalpha()):
+            errors["lastName"] = ["Last name required and alphabet only"]
+        elif not re.match(r'^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$', email):
+            errors["email"] = ["Email incorrect format"]
+        elif studentEmailExists or tutorEmailExists:
+            errors["email"] = ["Email already exists"]
+        elif not phoneNumber:
+            errors["phoneNumber"] = ["Phone number required"]
+        elif not re.match(r'^\d{10}$', phoneNumber):
+            errors["phoneNumber"] = ["Phone number should be 10 digits no dashes"]
+        elif not password:
+            errors["password"] = ["Password cannot be empty"]
+        elif not re.match(r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).+$', password):
+            errors["password"] = ["Password does not follow rules"]
         elif password != confirmPassword:
-            flash('Password don\'t match.', category='error')
-        elif len(password) < 7:
-            flash('Email must be at least 7 characters', category='error')
+            errors["confirmPassword"] = ["Passwords do not match"]
+        elif not about:
+            errors["about"] = ["About section required"]
+        elif not re.match(r'^[a-zA-Z0-9.\s]*$', about):
+            errors["about"] = ["Characters/numbers/spaces only"]
+
         else:
             new_tutor = Tutor(first_name=firstName, last_name=lastName, email=email,
                                 password=generate_password_hash(password, method='sha256'),
@@ -96,9 +130,9 @@ def tutor_registration():
                                 wednesday_time=wednesdayTime, thursday_time=thursdayTime,
                                 friday_time=fridayTime, saturday_time=saturdayTime,
                                 sunday_time=sundayTime, total_hours=0, 
-                                profile_pic=profilePic.read(), bio = aboutMe)
+                                profile_pic=profilePic.read(), bio = about)
             db.session.add(new_tutor)
             db.session.commit()
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
-    return render_template('tutor-registration.html')
+    return render_template('tutor-registration.html', errors=errors)

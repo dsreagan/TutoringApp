@@ -133,3 +133,53 @@ var enableSaturday = function () {
     saturdayEnd.disabled = "true";
   }
 };
+
+var validateStudent = function () {
+  var password = document.getElementById("studentPassword");
+  var upper = document.getElementById("upperCheckS");
+  var number = document.getElementById("numberCheckS");
+  var special = document.getElementById("specialCheckS");
+
+  if (password.value.match(/[0-9]/)) {
+    number.style.color = "green";
+  } else {
+    number.style.color = "red";
+  }
+
+  if (password.value.match(/[A-Z]/)) {
+    upper.style.color = "green";
+  } else {
+    upper.style.color = "red";
+  }
+
+  if (password.value.match(/[!\@\#\$\%\^\&\*\(\)]/)) {
+    special.style.color = "green";
+  } else {
+    special.style.color = "red";
+  }
+};
+
+var validateTutor = function () {
+  var password = document.getElementById("tutorPassword");
+  var upper = document.getElementById("upperCheckT");
+  var number = document.getElementById("numberCheckT");
+  var special = document.getElementById("specialCheckT");
+
+  if (password.value.match(/[0-9]/)) {
+    number.style.color = "green";
+  } else {
+    number.style.color = "red";
+  }
+
+  if (password.value.match(/[A-Z]/)) {
+    upper.style.color = "green";
+  } else {
+    upper.style.color = "red";
+  }
+
+  if (password.value.match(/[!\@\#\$\%\^\&\*\(\)]/)) {
+    special.style.color = "green";
+  } else {
+    special.style.color = "red";
+  }
+};

@@ -4,8 +4,63 @@ from werkzeug.security import generate_password_hash,  check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 import json
+import jwt
+import requests
+from time import time
 
 auth = Blueprint('auth', __name__)
+
+@auth.route('/zoom',methods = ['POST', "GET"])
+def zoom():
+    API_KEY = 'qecUpEX1SUGYDoNDH22qng'
+    API_SEC = 'FZxPYx6U2sBIwJUe3X7Nsr1mzMONgFipllnS'
+
+    token = jwt.encode(
+ 
+        # Create a payload of the token containing
+        # API Key & expiration time
+        {'iss': API_KEY, 'exp': time() + 5000},
+ 
+        # Secret used to generate token signature
+        API_SEC,
+ 
+        # Specify the hashing alg
+        algorithm='HS256'
+    )
+
+    meetingdetails = {"topic": "The title of your zoom meeting",
+                  "type": 2,
+                  "start_time": "2019-06-14T10: 21: 57",
+                  "duration": "45",
+                  "timezone": "Europe/Madrid",
+                  "agenda": "test",
+ 
+                  "recurrence": {"type": 1,
+                                 "repeat_interval": 1
+                                 },
+                  "settings": {"host_video": "true",
+                               "participant_video": "true",
+                               "join_before_host": "False",
+                               "mute_upon_entry": "False",
+                               "watermark": "true",
+                               "audio": "voip",
+                               "auto_recording": "cloud"
+                               }
+                  }
+    
+    headers = {'authorization': 'Bearer ' + token,
+               'content-type': 'application/json'}
+    r = requests.post(
+        f'https://api.zoom.us/v2/users/me/meetings',
+        headers=headers, data=json.dumps(meetingdetails))
+ 
+    print("\n creating zoom meeting ... \n")
+    # print(r.text)
+    # converting the output into json and extracting the details
+    y = json.loads(r.text)
+    join_URL = y["join_url"]
+    meetingPassword = y["password"]
+    return render_template("student-home.html", user = current_user, join_URL = join_URL)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():

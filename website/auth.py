@@ -1,11 +1,14 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import Student, Tutor
-from werkzeug.security import generate_password_hash,  check_password_hash
+from .models import Student, Tutor, Appointment
 from . import db
+from werkzeug.security import generate_password_hash,  check_password_hash
 import json
 import re
+from datetime import datetime
+
 
 auth = Blueprint('auth', __name__)
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -136,3 +139,21 @@ def tutor_registration():
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
     return render_template('tutor-registration.html', errors=errors)
+
+@auth.route('/student/', methods=['GET', 'POST'])
+def student():
+    print("WERE HERE")
+
+    if request.method == 'GET':
+        appt_data = db.session.query(Appointment).all()
+        return render_template('student-home.html', appointments=appt_data)
+
+
+@auth.route('/tutor/', methods=['GET', 'POST'])
+def tutor():
+    print("WERE HERE")
+
+    if request.method == 'GET':
+        appt_data = db.session.query(Appointment).all()
+        return render_template('tutor-home.html', appointments=appt_data)
+

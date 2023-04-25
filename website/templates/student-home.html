@@ -15,6 +15,25 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../static/css/styles.css" rel="stylesheet" />
+    <style>
+		table {
+			border-collapse: separate;
+			border-spacing: 0 15px;
+            margin-left: 15px;
+		}
+		th, td {
+			padding: 10px;
+			text-align: center;
+			border: 1px solid black;
+		}
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+	</style>
 </head>
 <body id="page-top">
     <!-- Navigation-->
@@ -43,8 +62,26 @@
     <!--body-->
     <section class="page-section bg-light" id="appointment">
         <div class="row" style="height:2000px">
-            <div class="col" style="height:auto; overflow:auto; border-right:5px solid black">
+            <div  class="col" style="height:auto; overflow:auto; border-right:5px solid black">
                 <h1 style="text-align:center">Appointments</h1>
+                <table method ='GET'>
+                    <tr>
+                        <th>Date</th>
+                        <th>Tutor</th>
+                        <th>Info</th>
+                        <th>Zoom Link</th>
+                    </tr>
+                    <ul>
+                        {% for appt in appointments %}
+                            <tr>
+                                <td>{{ appt.date }}</td>
+                                <td>{{ appt.tutor_id }}</td>
+                                <td>{{ appt.appointment_info }}</td>
+                                <td>{{ appt.zoom_link }}</td>
+                            </tr>
+                        {% endfor %}
+                    </ul>
+                </table>
             </div>
             <div class="col" style="height:500px; overflow:auto; ">
                 <h1 style="text-align:center">Favorite Tutors</h1>

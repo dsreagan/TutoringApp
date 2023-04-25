@@ -23,6 +23,18 @@
         <h1>Hi {{ user.first_name }}!</h1>
     </div>
 
+    <form class="grid" action="/zoom" method="POST">
+
+        {% if join_URL %}
+          <center>
+            <h3 style="color: blue;" class="let_space">Your Zoom link is: {{join_URL}}</h3>
+          </center> 
+
+        {% endif %}
+        <center><input class="file_submit" type="Submit"></center>
+
+      </form>
+
 
 
     <section class="page-section bg-light" id="allTutors">

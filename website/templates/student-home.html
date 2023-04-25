@@ -37,12 +37,22 @@
                             <div class="Tutors">
                                 <img src="{{tutor.profile_pic}}">
                                 <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
-                                <h3 style="font-weight:normal">{{tutor.id}}</h3>
-                                <h3 style="font-weight:normal">{{tutor.email}}</h3>
-                                <h3 style="font-weight:normal">{{tutor.phone_number}}</h3>
-                                <h3 style="font-weight:normal">Subjects: {{tutor.subjects}}</h3>
+                                <h3>{{tutor.id}}</h3>
+                                <h3>{{tutor.email}}</h3>
+                                <h3>{{tutor.phone_number}}</h3>
+                                <h3 style="font-weight:normal">Subjects: </h3>
+                                  <p style="font-weight:normal">{{tutor.subjects}}</p>
+                                <h3 style="font-weight:normal">Availability: </h3>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Monday: {{tutor.monday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Tuesday: {{tutor.tuesday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Wednesday: {{tutor.wednesday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">thursday: {{tutor.thursday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Friday: {{tutor.friday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Saturday: {{tutor.saturday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Sunday: {{tutor.sunday_time}}</p>
                                 <h3 style="font-weight:normal">Total Tutor Hours: {{tutor.total_hours}}</h3>
-                                <h3 style="font-weight:normal">Bio: {{tutor.bio}}</h3>
+                                <h3 style="font-weight:normal">Bio: </h3>
+                                  <p style="font-weight:normal">{{tutor.bio}}</p>
                                 <!--place holder for actual favorite button, not sure how to do it yet-->
                                 <input type="checkbox" id="Favorite">
                                 <label for="Favorite">Favorite</label>

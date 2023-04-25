@@ -3,8 +3,9 @@
 {% block body_content %}
     <!-- Masthead -->
     <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Welcome!</div>
+        <div class="container"><div class="user--info" >
+            <div class="masthead-subheading">Welcome {{ user.first_name }}!</div>
+        </div>
             <div class="masthead-heading text-uppercase">Classroom Connect Tutors</div>
             <a class="btn btn-primary btn-xl text-uppercase" href="">Schedule An Appointment</a>
         </div>
@@ -18,12 +19,6 @@
             <div class="col" style="height:500px; overflow:auto; ">
                 <h1 style="text-align:center">Favorite Tutors</h1>
         </div> -->
-
-    <div class="user--info" >
-        <h1>Hi {{ user.first_name }}!</h1>
-    </div>
-
-
 
     <section class="page-section bg-light" id="allTutors">
         <div class="text-center">

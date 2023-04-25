@@ -14,14 +14,23 @@
         <!-- Start of Form -->
         <form method="POST" enctype="multipart/form-data">
           <!-- Account information -->
+          {% for e in errors["firstName"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
           <div class="input-group mb-4">
             <span class="input-group-text"><i class="fa fa-user"></i></span>
             <input type="text" class="form-control" name="firstName" placeholder="First Name" required />
           </div>
+          {% for e in errors["lastName"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
           <div class="input-group mb-4">
             <span class="input-group-text"><i class="fa fa-user"></i></span>
             <input type="text" class="form-control" name="lastName" placeholder="Last Name" required />
           </div>
+          {% for e in errors["email"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
           <div class="input-group mb-4">
             <span class="input-group-text"><i class="fa fa-envelope"></i></span>
             <input
@@ -34,6 +43,9 @@
               required
             />
           </div>
+          {% for e in errors["phoneNumber"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
           <div class="input-group mb-4">
             <span class="input-group-text"><i class="fa fa-phone"></i></span>
             <input
@@ -46,10 +58,29 @@
               required
             />
           </div>
-          <div class="input-group mb-4">
+          {% for e in errors["password"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
+          <div class="input-group mb-2">
             <span class="input-group-text"><i class="fa fa-lock"></i></span>
-            <input type="password" class="form-control" name="password" placeholder="Password" required />
+            <input
+              id="studentPassword"
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Password"
+              onkeyup="validateStudent()"
+              required
+            />
           </div>
+          <ul class="requirements">
+            <li id="upperCheckS">Must have an uppercase character</li>
+            <li id="numberCheckS">Must have a number</li>
+            <li id="specialCheckS">Must have a special character !@#$%^&*()</li>
+          </ul>
+          {% for e in errors["confirmPassword"] %}
+          <div class="text-danger">{{e}}</div>
+          {% endfor %}
           <div class="input-group mb-4">
             <span class="input-group-text"><i class="fa fa-lock"></i></span>
             <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" required />
@@ -64,5 +95,6 @@
       </div>
     </div>
   </div>
+  <script src="../static/js/scripts.js"></script>
   {% endblock %}
 </body>

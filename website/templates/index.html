@@ -147,31 +147,7 @@
           <h2 class="section-heading text-uppercase">Our Tutors</h2>
           <h3 class="section-subheading text-muted">Find your favorite tutor!</h3>
         </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="../static/assets/img/team/1.jpg" alt="..." />
-              <h4>John Smith</h4>
-              <p class="text-muted">Expertise: Math, Science</p>
-              <p class="text-muted">About Me: I do not exist</p>
-            </div>
-
-          </div>
-          <div class="col-lg-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="../static/assets/img/team/4.jpg" alt="..." />
-              <h4>Olivia James</h4>
-              <p class="text-muted">Expertise: Science, English</p>
-              <p class="text-muted">About Me: I do not exist</p>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="../static/assets/img/team/3.jpg" alt="..." />
-              <h4>Bob Man</h4>
-              <p class="text-muted">Expertise: Computer Science</p>
-              <p class="text-muted">About Me: I do not exist</p>
-
+       
         <!--Search formating-->
         <div style="text-align: center; height:100px">
             <form class="form-inline my-2 my-lg-0" method="GET" action="" style="margin:auto">
@@ -180,31 +156,36 @@
             </form>
         </div>
         <!--display all and search-->
-        <div class="row" style="line-height: 5em; overflow:auto; margin: auto; height:600px" >
+        <div class="row" style="line-height: 5em; overflow:auto; margin: auto; height:1150px" >
             {% for tutor in tutor_all %}
                 <div class="col-lg-4">
                     <div class="team-member">
                         <div class="Tutors">
                             <img src="{{tutor.profile_pic}}">
                             <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
-                            <h3 style="font-weight:normal">{{tutor.id}}</h3>
-                            <h3 style="font-weight:normal">{{tutor.email}}</h3>
-                            <h3 style="font-weight:normal">{{tutor.phone_number}}</h3>
-                            <h3 style="font-weight:normal">Subjects: {{tutor.subjects}}</h3>
+                            <h3>{{tutor.id}}</h3>
+                            <h3>{{tutor.email}}</h3>
+                            <h3>{{tutor.phone_number}}</h3>
+                            <h3 style="font-weight:normal">Subjects: </h3>
+                              <p style="font-weight:normal">{{tutor.subjects}}</p>
                             <h3 style="font-weight:normal">Availability: </h3>
+                              <p align="left" style="margin-left:95px; font-weight:normal">Monday: {{tutor.monday_time}}</p>
+                              <p align="left" style="margin-left:95px; font-weight:normal">Tuesday: {{tutor.tuesday_time}}</p>
+                              <p align="left" style="margin-left:95px; font-weight:normal">Wednesday: {{tutor.wednesday_time}}</p>
+                              <p align="left" style="margin-left:95px; font-weight:normal">thursday: {{tutor.thursday_time}}</p>
+                              <p align="left" style="margin-left:95px; font-weight:normal">Friday: {{tutor.friday_time}}</p>
+                              <p align="left" style="margin-left:95px; font-weight:normal">Saturday: {{tutor.saturday_time}}</p>
+                              <p align="left" style="margin-left:95px; font-weight:normal">Sunday: {{tutor.sunday_time}}</p>
                             <h3 style="font-weight:normal">Total Tutor Hours: {{tutor.total_hours}}</h3>
-                            <h3 style="font-weight:normal">Bio: {{tutor.bio}}</h3>
+                            <h3 style="font-weight:normal">Bio: </h3>
+                              <p style="font-weight:normal">{{tutor.bio}}</p>
                         </div>
                     </div>
                 </div>
-
              {% endfor %}
-        </div>
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Want to help your fellow peers? Sign up to be a tutor today!</p></div>
-            </div>
           </div>
         </div>
+      </div>
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
             <p class="large text-muted">Want to help your fellow peers? Sign up to be a tutor today!</p>
@@ -212,71 +193,7 @@
         </div>
       </div>
     </section>
-    <section class="page-section" id="contact">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Login</h2>
-                <h3 class="section-subheading text-muted">or sign up now!</h3>
-                <a href="{{url_for('views.student_home')}}">  
-                    <button>Student</button>  
-                </a>
-                <a href="{{url_for('views.tutor_home')}}">  
-                    <button>Tutor</button>  
-                </a>
-            </div>
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- * * SB Forms Contact Form * *-->
-            <!-- * * * * * * * * * * * * * * *-->
-            <!-- This form is pre-integrated with SB Forms.-->
-            <!-- To make this form functional, sign up at-->
-            <!-- https://startbootstrap.com/solution/contact-forms-->
-            <!-- to get an API token!-->
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                <div class="row align-items-stretch mb-5">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <!-- Name input-->
-                            <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
-                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                        </div>
-                        <div class="form-group">
-                            <!-- Email address input-->
-                            <input class="form-control" id="email" type="email" placeholder="Username *" data-sb-validations="required,email" />
-                            <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                            <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                        </div>
-                        <div class="form-group mb-md-0">
-                            <!-- Phone number input-->
-                            <input class="form-control" id="phone" type="tel" placeholder="Password *" data-sb-validations="required" />
-                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        
-                    </div>
-                </div>
-                <!-- Submit success message-->
-                <!---->
-                <!-- This is what your users will see when the form-->
-                <!-- has successfully submitted-->
-                <div class="d-none" id="submitSuccessMessage">
-                    <div class="text-center text-white mb-3">
-                        <div class="fw-bolder">Form submission successful!</div>
-                        To activate this form, sign up at
-                        <br />
-                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                    </div>
-                </div>
-                <!-- Submit error message-->
-                <!---->
-                <!-- This is what your users will see when there is-->
-                <!-- an error submitting the form-->
-                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                <!-- Submit Button-->
-                <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Login</button></div>
-          </form>        
-      </div>
-    </section>
+   
     <!-- Footer-->
     <footer class="footer py-4">
       <div class="container">

@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import Student, Tutor
 from werkzeug.security import generate_password_hash,  check_password_hash
+from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 import json
 import re
@@ -18,19 +19,27 @@ def login():
         if student:
             if check_password_hash(student.password, password):
                 flash('Logged in successfully!', category='success')
+                login_user(student, remember=True)
                 return redirect(url_for('views.student_home'))
             else:
                 flash('Incorrect password, try again.', category='error')
         elif tutor:
             if check_password_hash(tutor.password, password):
                 flash('Logged in successfully!', category='success')
+                login_user(tutor, remember=True)
                 return redirect(url_for('views.tutor_home'))
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
             flash('Email does not exist.', category='error')
 
-    return render_template('login.html')
+    return render_template('login.html', user=current_user)
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('views.index', user=current_user))
 
 @auth.route('/student-registration', methods=['GET', 'POST'])
 def student_registration():
@@ -70,9 +79,10 @@ def student_registration():
                                    phone_number=phoneNumber, total_hours=0, fav_tutors='')
             db.session.add(new_student)
             db.session.commit()
+            login_user(new_student, remember=True)
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
-    return render_template('student-registration.html', errors=errors)
+    return render_template('student-registration.html', user=current_user, errors=errors)
 
 @auth.route('/tutor-registration', methods=['GET', 'POST'])
 def tutor_registration():
@@ -133,6 +143,7 @@ def tutor_registration():
                                 profile_pic=profilePic.read(), bio = about)
             db.session.add(new_tutor)
             db.session.commit()
+            login_user(new_tutor, remember=True)
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
-    return render_template('tutor-registration.html', errors=errors)
+    return render_template('tutor-registration.html', user=current_user, errors=errors)

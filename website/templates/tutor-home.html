@@ -78,10 +78,10 @@
                     <ul>
                         {% for appt in appointments %}
                             <tr>
-                                <td>{{ appt.date }}</td>
-                                <td>{{ appt.student_id }}</td>
-                                <td>{{ appt.appointment_info }}</td>
-                                <td>{{ appt.zoom_link }}</td>
+                                <td>{{ appt[0].date }}</td>
+                                <td>{{ appt[1] }}</td>
+                                <td>{{ appt[0].appointment_info }}</td>
+                                <td>{{ appt[0].zoom_link }}</td>
                             </tr>
                         {% endfor %}
                     </ul>
@@ -105,7 +105,6 @@
             </div>
         </div>
     </footer>
-{% endblock %}
 
 
 

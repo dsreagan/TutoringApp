@@ -49,4 +49,17 @@ def student_home():
 @views.route('/tutor')
 @login_required
 def tutor_home():
-    return render_template('tutor-home.html', user=current_user)
+    appts_Table = request.args.get('fixedTable')
+    appt_found = Appointment.query.join(Tutor, Tutor.id == Appointment.tutor_id).filter(Appointment.tutor_id == current_user.get_id())
+    print(current_user.get_id())
+    print(appt_found)
+    studentNames_found = Student.query.join(Appointment, Student.id == Appointment.student_id).filter(Appointment.tutor_id == current_user.get_id()).all()
+    print(studentNames_found)
+    JoinedRows = []
+    for appt in appt_found:
+        for student in studentNames_found:
+            if student.id == appt.student_id:
+                JoinedRows.append([appt, str(student.first_name + ' ' + student.last_name)])
+
+
+    return render_template('tutor-home.html', user=current_user, appointments = JoinedRows)

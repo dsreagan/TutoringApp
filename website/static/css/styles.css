@@ -3571,8 +3571,8 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-warning {
-  color: #ffc800;
-  border-color: #ffc800;
+  color: rgb(33, 37, 41);
+  border-color: rgb(33, 37, 41);
 }
 .btn-outline-warning:hover {
   color: #fff;
@@ -4695,7 +4695,7 @@ fieldset:disabled .btn {
 }
 
 .navbar-light .navbar-brand {
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(0, 0, 0);
 }
 .navbar-light .navbar-brand:hover,
 .navbar-light .navbar-brand:focus {

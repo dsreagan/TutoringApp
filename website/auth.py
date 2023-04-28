@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import Student, Tutor, Appointment
 from . import db
 from werkzeug.security import generate_password_hash,  check_password_hash
+from flask_login import login_user, login_required, logout_user, current_user
+from . import db
 import json
 import re
 from datetime import datetime
@@ -21,19 +23,27 @@ def login():
         if student:
             if check_password_hash(student.password, password):
                 flash('Logged in successfully!', category='success')
+                login_user(student, remember=True)
                 return redirect(url_for('views.student_home'))
             else:
                 flash('Incorrect password, try again.', category='error')
         elif tutor:
             if check_password_hash(tutor.password, password):
                 flash('Logged in successfully!', category='success')
+                login_user(tutor, remember=True)
                 return redirect(url_for('views.tutor_home'))
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
             flash('Email does not exist.', category='error')
 
-    return render_template('login.html')
+    return render_template('login.html', user=current_user)
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('views.index', user=current_user))
 
 @auth.route('/student-registration', methods=['GET', 'POST'])
 def student_registration():
@@ -46,25 +56,13 @@ def student_registration():
         password = request.form.get('password')
         confirmPassword = request.form.get('confirmPassword')
 
-        studentEmailExists = Student.query.filter_by(email=email).first()
-        tutorEmailExists = Tutor.query.filter_by(email=email).first()
-
-        if not (firstName or firstName.isalpha()):
-            errors["firstName"] = ["First name required and alphabet only"]
-        elif not (lastName or lastName.isalpha()):
-            errors["lastName"] = ["Last name required and alphabet only"]
-        elif not re.match(r'^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$', email):
-            errors["email"] = ["Email incorrect format"]
-        elif studentEmailExists or tutorEmailExists:
-            errors["email"] = ["Email already exists"]
-        elif not phoneNumber:
-            errors["phoneNumber"] = ["Phone number required"]
-        elif not re.match(r'^\d{10}$', phoneNumber):
-            errors["phoneNumber"] = ["Phone number should be 10 digits no dashes"]
-        elif not password:
-            errors["password"] = ["Password cannot be empty"]
-        elif not re.match(r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).+$', password):
-            errors["password"] = ["Password does not follow rules"]
+        student = Student.query.filter_by(email=email).first()
+        if student:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
+            flash('Email must be greater than 3 characters.', category='error')
+        elif len(firstName) < 2:
+            flash('First name must be greater than 1 character.', category='error')
         elif password != confirmPassword:
             errors["confirmPassword"] = ["Passwords do not match"]
         else:
@@ -73,9 +71,10 @@ def student_registration():
                                    phone_number=phoneNumber, total_hours=0, fav_tutors='')
             db.session.add(new_student)
             db.session.commit()
+            login_user(new_student, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('views.registered'))
-    return render_template('student-registration.html', errors=errors)
+            return redirect(url_for('views.student_home'))
+    return render_template('student-registration.html', user=current_user)
 
 @auth.route('/tutor-registration', methods=['GET', 'POST'])
 def tutor_registration():
@@ -102,22 +101,13 @@ def tutor_registration():
         studentEmailExists = Student.query.filter_by(email=email).first()
         tutorEmailExists = Tutor.query.filter_by(email=email).first()
 
-        if not (firstName or firstName.isalpha()):
-            errors["firstName"] = ["First name required and alphabet only"]
-        elif not (lastName or lastName.isalpha()):
-            errors["lastName"] = ["Last name required and alphabet only"]
-        elif not re.match(r'^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$', email):
-            errors["email"] = ["Email incorrect format"]
-        elif studentEmailExists or tutorEmailExists:
-            errors["email"] = ["Email already exists"]
-        elif not phoneNumber:
-            errors["phoneNumber"] = ["Phone number required"]
-        elif not re.match(r'^\d{10}$', phoneNumber):
-            errors["phoneNumber"] = ["Phone number should be 10 digits no dashes"]
-        elif not password:
-            errors["password"] = ["Password cannot be empty"]
-        elif not re.match(r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).+$', password):
-            errors["password"] = ["Password does not follow rules"]
+        tutor = Tutor.query.filter_by(email=email).first()
+        if tutor:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
+            flash('Email must be greater than 3 characters.', category='error')
+        elif len(firstName) < 2:
+            flash('First name must be greater than 1 character.', category='error')
         elif password != confirmPassword:
             errors["confirmPassword"] = ["Passwords do not match"]
         elif not about:
@@ -136,24 +126,7 @@ def tutor_registration():
                                 profile_pic=profilePic.read(), bio = about)
             db.session.add(new_tutor)
             db.session.commit()
+            login_user(new_tutor, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('views.registered'))
-    return render_template('tutor-registration.html', errors=errors)
-
-@auth.route('/student/', methods=['GET', 'POST'])
-def student():
-    print("WERE HERE")
-
-    if request.method == 'GET':
-        appt_data = db.session.query(Appointment).all()
-        return render_template('student-home.html', appointments=appt_data)
-
-
-@auth.route('/tutor/', methods=['GET', 'POST'])
-def tutor():
-    print("WERE HERE")
-
-    if request.method == 'GET':
-        appt_data = db.session.query(Appointment).all()
-        return render_template('tutor-home.html', appointments=appt_data)
-
+            return redirect(url_for('views.tutor_home'))
+    return render_template('tutor-registration.html', user=current_user)

@@ -31,6 +31,7 @@ class Tutor(db.Model, UserMixin):
     sunday_time = db.Column(db.String(20))
     total_hours = db.Column(db.Float)
     profile_pic = db.Column(db.LargeBinary)
+    profile_picname = db.Column(db.String(100))
     bio = db.Column(db.Text)
     appointments = db.relationship('Appointment', backref='tutor')
 

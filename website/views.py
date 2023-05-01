@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request, url_for
 from flask_login import login_required, current_user
 from .models import *
+import mimetypes
+import base64
+import io
 
 views = Blueprint('views', __name__)
 
@@ -15,7 +18,7 @@ def index():
 
 @views.route('/registered')
 def registered():
-    return render_template('registered.html')
+    return render_template('registered.html', user=current_user)
 
 @views.route('/student')
 @login_required
@@ -30,4 +33,10 @@ def student_home():
 @views.route('/tutor')
 @login_required
 def tutor_home():
-    return render_template('tutor-home.html', user=current_user)
+    user_id = current_user.id
+    user_row = Tutor.query.filter_by(id=user_id).first()
+    binary_data = user_row.profile_pic
+    file_obj = io.BytesIO(binary_data)
+    decoded_data = base64.b64encode(file_obj.read()).decode('utf-8')
+    file_type, encoding = mimetypes.guess_type(user_row.profile_picname)
+    return render_template('tutor-home.html', user=current_user, data=decoded_data, fileType = file_type)

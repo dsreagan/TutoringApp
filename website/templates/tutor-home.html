@@ -11,6 +11,13 @@
         </div>
     </header>
     <!--body-->
+    {% if fileType == 'image/png' %}
+        <img src="data:image/png;base64,{{ data }}" alt="File">
+    {% elif fileType == 'image/jpeg' %}
+        <img src="data:image/jpeg;base64,{{ data }}" alt="File">
+    {% else %}
+        <p>Cannot load image</p>
+    {% endif %}
     <section class="page-section bg-light" id="appointment">
         <div class="row" style="height:2000px">
             <div class="col" style="height:auto; overflow:auto; border-right:5px solid black">

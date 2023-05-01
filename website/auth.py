@@ -104,6 +104,7 @@ def tutor_registration():
         saturdayTime = json.dumps(request.form.getlist('saturdayTime'))
         sundayTime = json.dumps(request.form.getlist('sundayTime'))
         profilePic = request.files['file']
+        profilePicName = profilePic.filename
         about = request.form.get('about')
 
         studentEmailExists = Student.query.filter_by(email=email).first()
@@ -140,7 +141,8 @@ def tutor_registration():
                                 wednesday_time=wednesdayTime, thursday_time=thursdayTime,
                                 friday_time=fridayTime, saturday_time=saturdayTime,
                                 sunday_time=sundayTime, total_hours=0, 
-                                profile_pic=profilePic.read(), bio = about)
+                                profile_pic=profilePic.read(), profile_picname=profilePicName,
+                                bio = about)
             db.session.add(new_tutor)
             db.session.commit()
             login_user(new_tutor, remember=True)

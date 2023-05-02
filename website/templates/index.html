@@ -161,7 +161,13 @@
                 <div class="col-lg-4">
                     <div class="team-member">
                         <div class="Tutors">
-                            <img src="{{tutor.profile_pic}}">
+                            {% if fileType == 'image/png' %}
+                            <img src="data:image/png;base64,{{ data }}" alt="File" style="width:auto; height:300px; border-radius:20%">
+                            {% elif fileType == 'image/jpeg' %}
+                            <img src="data:image/jpeg;base64,{{ data }}" alt="File" style="width:auto; height:300px; border-radius:20%">
+                            {% else %}
+                            <p>Cannot load image</p>
+                            {% endif %}
                             <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
                             <h3>{{tutor.id}}</h3>
                             <h3 style="font-weight:normal">Subjects: </h3>

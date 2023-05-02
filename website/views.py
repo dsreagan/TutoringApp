@@ -14,7 +14,16 @@ def index():
         tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search) | Tutor.subjects.contains(tutor_search)).all()
     else:
         tutor_all = Tutor.query.all()
-    return render_template('index.html', user=current_user, tutor_all=tutor_all)
+    for tutor in tutor_all:
+        user_id = tutor.id
+        user_row = Tutor.query.filter_by(id=user_id).first()
+        binary_data = user_row.profile_pic
+        file_obj = io.BytesIO(binary_data)
+        decoded_data = base64.b64encode(file_obj.read()).decode('utf-8')
+        file_type, encoding = mimetypes.guess_type(user_row.profile_picname)
+    
+    return render_template('index.html', user=current_user, tutor_all=tutor_all, data=decoded_data, fileType = file_type)
+
 
 @views.route('/registered')
 def registered():
@@ -28,7 +37,16 @@ def student_home():
         tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search) | Tutor.subjects.contains(tutor_search)).all()
     else:
         tutor_all = Tutor.query.all()
-    return render_template('student-home.html', user=current_user, tutor_all=tutor_all)
+    
+    for tutor in tutor_all:
+        user_id = tutor.id
+        user_row = Tutor.query.filter_by(id=user_id).first()
+        binary_data = user_row.profile_pic
+        file_obj = io.BytesIO(binary_data)
+        decoded_data = base64.b64encode(file_obj.read()).decode('utf-8')
+        file_type, encoding = mimetypes.guess_type(user_row.profile_picname)
+    
+    return render_template('student-home.html', user=current_user, tutor_all=tutor_all, data=decoded_data, fileType = file_type)
 
 @views.route('/tutor')
 @login_required

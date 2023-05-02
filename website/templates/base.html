@@ -2,14 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <script
+      src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
+      rel="stylesheet"
+      type="text/css"
+    />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../static/css/styles.css" rel="stylesheet" />
     {% block head %} {% endblock %}
@@ -20,7 +34,9 @@
     {% endblock %}
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="/"><img src="../static/assets/img/navbar-logo.svg" alt="..." /></a>
+        <a class="navbar-brand" href="/"
+          ><img src="../static/assets/img/navbar-logo.svg" alt="..."
+        /></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -35,23 +51,52 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-            <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-            <li class="nav-item"><a class="nav-link" href="#portfolio">Subjects</a></li>
-            <li class="nav-item"><a class="nav-link" href="#team">Tutors</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolio">Subjects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#team">Tutors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/crappt">Create an Appointment</a>
+            </li>
             {% if not user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a>
+            </li>
             <li class="nav-item dropdown">
-              <a class="btn btn-dark dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              <a
+                class="btn btn-dark dropdown-toggle"
+                role="button"
+                id="dropdownMenuLink"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Register
               </a>
               <div class="dropdown-menu dropdown-menu-dark">
-                <a href="{{ url_for('auth.student_registration') }}" class="dropdown-item">As a Student</a>
+                <a
+                  href="{{ url_for('auth.student_registration') }}"
+                  class="dropdown-item"
+                  >As a Student</a
+                >
                 <div class="dropdown-divider"></div>
-                <a href="{{ url_for('auth.tutor_registration') }}" class="dropdown-item">As a Tutor</a>
+                <a
+                  href="{{ url_for('auth.tutor_registration') }}"
+                  class="dropdown-item"
+                  >As a Tutor</a
+                >
               </div>
             </li>
             {% else %}
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.logout') }}"
+                >Log Out</a
+              >
+            </li>
             {% endif %}
           </ul>
         </div>

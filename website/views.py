@@ -1,8 +1,12 @@
 from flask import Blueprint, render_template, request, url_for
 from flask_login import login_required, current_user
 from .models import *
+import mimetypes
+import base64
+import io
 from . import db
 import json
+
 
 views = Blueprint('views', __name__)
 
@@ -13,7 +17,16 @@ def index():
         tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search) | Tutor.subjects.contains(tutor_search)).all()
     else:
         tutor_all = Tutor.query.all()
-    return render_template('index.html', user=current_user, tutor_all=tutor_all)
+    for tutor in tutor_all:
+        user_id = tutor.id
+        user_row = Tutor.query.filter_by(id=user_id).first()
+        binary_data = user_row.profile_pic
+        file_obj = io.BytesIO(binary_data)
+        decoded_data = base64.b64encode(file_obj.read()).decode('utf-8')
+        file_type, encoding = mimetypes.guess_type(user_row.profile_picname)
+    
+    return render_template('index.html', user=current_user, tutor_all=tutor_all, data=decoded_data, fileType = file_type)
+
 
 @views.route('/student')
 @login_required
@@ -36,13 +49,29 @@ def student_home():
         tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search))
     else:
         tutor_all = Tutor.query.all()
-
-    return render_template('student-home.html', user=current_user, tutor_all=tutor_all, appointments=JoinedRows)
+    
+    for tutor in tutor_all:
+        user_id = tutor.id
+        user_row = Tutor.query.filter_by(id=user_id).first()
+        binary_data = user_row.profile_pic
+        file_obj = io.BytesIO(binary_data)
+        decoded_data = base64.b64encode(file_obj.read()).decode('utf-8')
+        file_type, encoding = mimetypes.guess_type(user_row.profile_picname)
+    
+    return render_template('student-home.html', user=current_user, tutor_all=tutor_all, data=decoded_data, fileType = file_type, appointments=JoinedRows)
 
 
 @views.route('/tutor')
 @login_required
 def tutor_home():
+
+    user_id = current_user.id
+    user_row = Tutor.query.filter_by(id=user_id).first()
+    binary_data = user_row.profile_pic
+    file_obj = io.BytesIO(binary_data)
+    decoded_data = base64.b64encode(file_obj.read()).decode('utf-8')
+    file_type, encoding = mimetypes.guess_type(user_row.profile_picname)
+    return render_template('tutor-home.html', user=current_user)
 
     appts_Table = request.args.get('fixedTable')
     appt_found = Appointment.query.join(Tutor, Tutor.id == Appointment.tutor_id).filter(Appointment.tutor_id == current_user.get_id())
@@ -56,7 +85,7 @@ def tutor_home():
             if student.id == appt.student_id:
                 JoinedRows.append([appt, str(student.first_name + ' ' + student.last_name)])
 
-    return render_template('tutor-home.html', user=current_user, appointments = JoinedRows)
+    return render_template('tutor-home.html', user=current_user, appointments = JoinedRows, data=decoded_data, fileType = file_type)
     
 
 @views.route('/appointments', methods=['GET', 'POST'])

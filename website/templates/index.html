@@ -156,16 +156,20 @@
             </form>
         </div>
         <!--display all and search-->
-        <div class="row" style="line-height: 5em; overflow:auto; margin: auto; height:1150px" >
+        <div class="row" style="line-height: 5em; overflow:auto; margin: auto; height:1100px" >
             {% for tutor in tutor_all %}
                 <div class="col-lg-4">
                     <div class="team-member">
                         <div class="Tutors">
-                            <img src="{{tutor.profile_pic}}">
+                            {% if fileType == 'image/png' %}
+                            <img src="data:image/png;base64,{{ data }}" alt="File" style="width:auto; height:300px; border-radius:20%">
+                            {% elif fileType == 'image/jpeg' %}
+                            <img src="data:image/jpeg;base64,{{ data }}" alt="File" style="width:auto; height:300px; border-radius:20%">
+                            {% else %}
+                            <p>Cannot load image</p>
+                            {% endif %}
                             <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
                             <h3>{{tutor.id}}</h3>
-                            <h3>{{tutor.email}}</h3>
-                            <h3>{{tutor.phone_number}}</h3>
                             <h3 style="font-weight:normal">Subjects: </h3>
                               <p style="font-weight:normal">{{tutor.subjects}}</p>
                             <h3 style="font-weight:normal">Availability: </h3>

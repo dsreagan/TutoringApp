@@ -4,6 +4,13 @@
     <!-- Masthead-->
     <header class="masthead">
         <div class="container">
+        {% if fileType == 'image/png' %}
+            <img src="data:image/png;base64,{{ data }}" alt="File" style="width:auto; height:500px; border-radius:20%">
+        {% elif fileType == 'image/jpeg' %}
+            <img src="data:image/jpeg;base64,{{ data }}" alt="File" style="width:auto; height:500px; border-radius:20%">
+        {% else %}
+            <p>Cannot load image</p>
+        {% endif %}
             <div class="container"><div class="user--info" >
                 <div class="masthead-subheading">Welcome {{ user.first_name }}!</div>
             </div>

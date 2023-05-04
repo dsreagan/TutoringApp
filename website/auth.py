@@ -1,10 +1,13 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import Student, Tutor
+from .models import Student, Tutor, Appointment
+from . import db
 from werkzeug.security import generate_password_hash,  check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 import json
 import re
+from datetime import datetime
+
 
 auth = Blueprint('auth', __name__)
 

@@ -70,7 +70,7 @@
             id="mondayCheck"
             onclick="enableMonday()"
           />
-          <label class="form-check-label" for="mondayCheck"> Monday </label>
+          <label class="form-check-label" for="mondayCheck"> Monday {{fourDays}}</label>
         </div>
         <div class="d-inline-block mb-2">
           <input
@@ -95,7 +95,7 @@
             id="tuesdayCheck"
             onclick="enableTuesday()"
           />
-          <label class="form-check-label" for="tuesdayCheck"> Tuesday </label>
+          <label class="form-check-label" for="tuesdayCheck"> Tuesday - {{fiveDays}}</label>
         </div>
         <div class="d-inline-block mb-2">
           <input
@@ -126,7 +126,7 @@
             id="wednesdayCheck"
             onclick="enableWednesday()"
           />
-          <label class="form-check-label" for="wednesdayCheck"> Wednesday </label>
+          <label class="form-check-label" for="wednesdayCheck"> Wednesday - {{sixDays}}</label>
         </div>
         <div class="d-inline-block mb-2">
           <input
@@ -157,7 +157,7 @@
             id="thursdayCheck"
             onclick="enableThursday()"
           />
-          <label class="form-check-label" for="thursdayCheck"> Thursday </label>
+          <label class="form-check-label" for="thursdayCheck"> Thursday - {{today}}</label>
         </div>
         <div class="d-inline-block mb-2">
           <input
@@ -188,7 +188,7 @@
             id="fridayCheck"
             onclick="enableFriday()"
           />
-          <label class="form-check-label" for="fridayCheck"> Friday </label>
+          <label class="form-check-label" for="fridayCheck"> Friday - {{tomorrow}} </label>
         </div>
         <div class="d-inline-block mb-2">
           <input
@@ -213,7 +213,7 @@
             id="saturdayCheck"
             onclick="enableSaturday()"
           />
-          <label class="form-check-label" for="saturdayCheck">Saturday</label>
+          <label class="form-check-label" for="saturdayCheck">Saturday - {{twoDays}}</label>
         </div>
         <div class="d-inline-block mb-2">
           <input
@@ -244,7 +244,7 @@
             id="sundayCheck"
             onclick="enableSunday()"
           />
-          <label class="form-check-label" for="sundayCheck">Sunday</label>
+          <label class="form-check-label" for="sundayCheck">Sunday - {{threeDays}}</label>
         </div>
         <div class="d-inline-block mb-2">
           <input
@@ -262,7 +262,7 @@
       </div>
       <!-- Register Button -->
       <div>
-        <input class="btn btn-primary btn-xl text-uppercase pe-auto" type="submit" value="Reserve Appointment" />
+        <input class="btn btn-primary btn-xl text-uppercase pe-auto" type="submit" name="tutor" value="Reserve Appointment w/ {{our_tutor.first_name}}" />
       </div><br>    </div>
       <h4>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h4>
       {% endfor %} {% endblock %}

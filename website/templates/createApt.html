@@ -1,0 +1,274 @@
+{% block content%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Classroom Connect Tutors</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script
+      src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Google fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../static/css/styles.css" rel="stylesheet" />
+  </head>
+
+  <div class="avaiable-apt-card">
+    <a
+      href="/"
+      class="btn btn-outline-warning btn-lg text-uppercase pe-auto mt-4"
+    >
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      Go Back
+    </a>
+    <br><body style="background-color: grey"><br>
+      <div class="available-card">
+      <h4 class="tutor-title">Available Tutors</h4>
+      {% for our_tutor in our_tutors %}
+      <div class="tutor-image">
+        <img src="data:image/png;base64, {{our_tutor.profile_pic}}" />
+      </div>
+      <div class="tutor-information">
+      <div class="tutor-header">
+        <h4 class="tutor-name">{{ our_tutor.first_name }} {{our_tutor.last_name}}</h4>
+        <p class="tutor-contact-email">
+          Email: {{our_tutor.email}}<br />
+          Phone: {{our_tutor.phone_number}}
+        </p>
+        <p>{{our_tutor.bio}}</p>
+        <p>Currently Tutoring: {{our_tutor.subjects}}</p><br>
+        <h4 class=appointment-header>Make an appointment:</h4>
+        <form method="POST" enctype="multipart/form-data">
+        {% if our_tutor.monday_time[0] == '[' and our_tutor.monday_time[1] !=
+        ']' %}
+        <p class="times">Monday Availability (start, end) - {{our_tutor.monday_time}}</p>
+        <p> <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="day"
+            value="monday"
+            id="mondayCheck"
+            onclick="enableMonday()"
+          />
+          <label class="form-check-label" for="mondayCheck"> Monday </label>
+        </div>
+        <div class="d-inline-block mb-2">
+          <input
+            id="mondayBegin"
+            type="time"
+            name="mondayTime"
+            value=""
+            disabled
+          />
+          To
+          <input id="mondayEnd" type="time" name="mondayTime" value="" disabled />
+        </div></p>
+        {% endif %} {% if our_tutor.tuesday_time[0] == '[' and
+        our_tutor.tuesday_time[1] != ']' %}
+        <p class="times">Tuesday Availability (start, end) - {{our_tutor.tuesday_time}}</p>
+        <p><div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="day"
+            value="tuesday"
+            id="tuesdayCheck"
+            onclick="enableTuesday()"
+          />
+          <label class="form-check-label" for="tuesdayCheck"> Tuesday </label>
+        </div>
+        <div class="d-inline-block mb-2">
+          <input
+            id="tuesdayBegin"
+            type="time"
+            name="tuesdayTime"
+            value=""
+            disabled
+          />
+          To
+          <input
+            id="tuesdayEnd"
+            type="time"
+            name="tuesdayTime"
+            value=""
+            disabled
+          />
+        </div></p>
+        {% endif %} {% if our_tutor.wednesday_time[0] == '[' and
+        our_tutor.wednesday_time[1] != ']' %}
+        <p class="times">Wednesday Availability (start, end) - {{our_tutor.wednesday_time}}</p>
+        <p><div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="day"
+            value="wednesday"
+            id="wednesdayCheck"
+            onclick="enableWednesday()"
+          />
+          <label class="form-check-label" for="wednesdayCheck"> Wednesday </label>
+        </div>
+        <div class="d-inline-block mb-2">
+          <input
+            id="wednesdayBegin"
+            type="time"
+            name="wednesdayTime"
+            value=""
+            disabled
+          />
+          To
+          <input
+            id="wednesdayEnd"
+            type="time"
+            name="wednesdayTime"
+            value=""
+            disabled
+          />
+        </div></p>
+        {% endif %} {% if our_tutor.thursday_time[0] == '[' and
+        our_tutor.thursday_time[1] != ']' %}
+        <p class="times">Thursday Availability (start, end) - {{our_tutor.thursday_time}}</p>
+        <p><div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="day"
+            value="thursday"
+            id="thursdayCheck"
+            onclick="enableThursday()"
+          />
+          <label class="form-check-label" for="thursdayCheck"> Thursday </label>
+        </div>
+        <div class="d-inline-block mb-2">
+          <input
+            id="thursdayBegin"
+            type="time"
+            name="thursdayTime"
+            value=""
+            disabled
+          />
+          To
+          <input
+            id="thursdayEnd"
+            type="time"
+            name="thursdayTime"
+            value=""
+            disabled
+          />
+        </div></p>
+        {% endif %} {% if our_tutor.friday_time[0] == '[' and
+        our_tutor.friday_time[1] != ']' %}
+        <p class="times">Friday Availability (start, end) - {{our_tutor.friday_time}}</p>
+        <p><div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="day"
+            value="friday"
+            id="fridayCheck"
+            onclick="enableFriday()"
+          />
+          <label class="form-check-label" for="fridayCheck"> Friday </label>
+        </div>
+        <div class="d-inline-block mb-2">
+          <input
+            id="fridayBegin"
+            type="time"
+            name="fridayTime"
+            value=""
+            disabled
+          />
+          To
+          <input id="fridayEnd" type="time" name="fridayTime" value="" disabled />
+        </div></p>
+        {% endif %} {% if our_tutor.saturday_time[0] == '[' and
+        our_tutor.saturday_time[1] != ']' %}
+        <p class="times">Saturday Availability (start, end) - {{our_tutor.saturday_time}}</p>
+        <p><div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="day"
+            value="saturday"
+            id="saturdayCheck"
+            onclick="enableSaturday()"
+          />
+          <label class="form-check-label" for="saturdayCheck">Saturday</label>
+        </div>
+        <div class="d-inline-block mb-2">
+          <input
+            id="saturdayBegin"
+            type="time"
+            name="saturdayTime"
+            value=""
+            disabled
+          />
+          To
+          <input
+            id="saturdayEnd"
+            type="time"
+            name="saturdayTime"
+            value=""
+            disabled
+          />
+        </div></p>
+        {% endif %} {% if our_tutor.sunday_time[0] == '[' and
+        our_tutor.sunday_time[1]!= ']' %}
+        <p class="times">Sunday Availability (start, end) - {{our_tutor.sunday_time}}</p>
+        <p><div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="day"
+            value="sunday"
+            id="sundayCheck"
+            onclick="enableSunday()"
+          />
+          <label class="form-check-label" for="sundayCheck">Sunday</label>
+        </div>
+        <div class="d-inline-block mb-2">
+          <input
+            id="sundayBegin"
+            type="time"
+            name="sundayTime"
+            value=""
+            disabled
+          />
+          To
+          <input id="sundayEnd" type="time" name="sundayTime" value="" disabled />
+        </div></p>
+        {% endif %}
+        <div class="tutor-info">{{our_tutor.extraInfo}}</div>
+      </div>
+      <!-- Register Button -->
+      <div>
+        <input class="btn btn-primary btn-xl text-uppercase pe-auto" type="submit" value="Reserve Appointment" />
+      </div><br>    </div>
+      <h4>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h4>
+      {% endfor %} {% endblock %}
+    </div>
+    </form>
+      <script src="../static/js/scripts.js"></script>
+    </body>
+  </div>
+</html>

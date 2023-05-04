@@ -39,7 +39,7 @@
               <i class="fas fa-circle fa-stack-2x text-primary"></i>
               <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
             </span>
-            <h4 class="my-3">Create an appointment</h4>
+            <h4 class="my-3">Make an appointment</h4>
             <p class="text-muted">Schedule personal tutoring appointments with your favorite tutors today!</p>
           </div>
         </div>
@@ -149,10 +149,10 @@
         </div>
        
         <!--Search formating-->
-        <div style="text-align: center; height:100px">
+        <div class="tutor-search">
             <form class="form-inline my-2 my-lg-0" method="GET" action="" style="margin:auto">
-                <input type="search" placeholder="Search Tutor by name, ID, or subject" name="tutor_search" style="width:500px">
-                <button type="submit"><i class="fas fa-search"></i></button>
+                <input class="tutor-search-bar" type="search" placeholder="Search Tutor by name, ID, or subject" name="tutor_search">
+                <button class="tutor-search-btn" type="submit"><i class="fas fa-search"></i></button>
             </form>
         </div>
         <!--display all and search-->
@@ -192,7 +192,7 @@
       </div>
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <p class="large text-muted">Want to help your fellow peers? Sign up to be a tutor today!</p>
+            <p class="large text-muted">Want to help your fellow peers? <a href="{{ url_for('auth.tutor_registration') }}">Sign up</a> to be a tutor today!</p>
           </div>
         </div>
       </div>

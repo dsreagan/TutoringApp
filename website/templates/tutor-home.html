@@ -22,6 +22,24 @@
         <div class="row" style="height:2000px">
             <div class="col" style="height:auto; overflow:auto; border-right:5px solid black">
                 <h1 style="text-align:center">Appointments</h1>
+                <table class='fixedTable' method ='GET'>
+                    <tr>
+                        <th>Date</th>
+                        <th>Tutor</th>
+                        <th>Info</th>
+                        <th>Zoom Link</th>
+                    </tr>
+                    <ul>
+                        {% for appt in appointments %}
+                            <tr>
+                                <td>{{ appt[0].date }}</td>
+                                <td>{{ appt[1] }}</td>
+                                <td>{{ appt[0].appointment_info }}</td>
+                                <td>{{ appt[0].zoom_link }}</td>
+                            </tr>
+                        {% endfor %}
+                    </ul>
+                </table>
             </div>
     </section>
     <!-- Footer-->
@@ -42,8 +60,3 @@
         </div>
     </footer>
 {% endblock %}
-
-
-
-
-

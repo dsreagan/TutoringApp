@@ -66,6 +66,22 @@
   --bs-body-bg: #fff;
 }
 
+.tutor-search {
+  text-align: center; 
+  height: 85px;
+}
+
+.tutor-search-bar {
+  width: 500px;
+  border: 2px solid #ffc800;
+  border-radius: 10px;
+}
+
+.tutor-search-btn {
+  border: 2px solid #ffc800;
+  border-radius: 10px;
+}
+
 *,
 *::before,
 *::after {

@@ -157,7 +157,7 @@ def tutor_registration():
     return render_template('tutor-registration.html', user=current_user, errors=errors)
 
 
-@auth.route('/studentRegistration', methods=['GET', 'POST'])
+@auth.route('/student-registration', methods=['GET', 'POST'])
 def studentRegistration():
     if request.method == 'POST':
         firstName = request.form.get('firstName')
@@ -185,21 +185,3 @@ def studentRegistration():
             flash('Account created!', category='success')
             return redirect(url_for('views.registered'))
     return render_template('studentRegistration.html')
-
-
-@auth.route('/crappt', methods=['GET', 'POST'])
-def crappt():
-    if request.method == 'POST':
-        mondayTime = json.dumps(request.form.getlist('mondayTime'))
-        tuesdayTime = json.dumps(request.form.getlist('tuesdayTime'))
-        wednesdayTime = json.dumps(request.form.getlist('wednesdayTime'))
-        thursdayTime = json.dumps(request.form.getlist('thursdayTime'))
-        fridayTime = json.dumps(request.form.getlist('fridayTime'))
-        saturdayTime = json.dumps(request.form.getlist('saturdayTime'))
-        sundayTime = json.dumps(request.form.getlist('sundayTime'))
-
-        print(mondayTime)
-
-    our_tutors = Tutor.query.order_by(Tutor.id)
-
-    return render_template("createApt.html", our_tutors=our_tutors)

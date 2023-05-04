@@ -1,66 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Classroom Connect Tutors</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../static/css/styles.css" rel="stylesheet" />
-    <style>
-		table {
-			border-collapse: separate;
-			border-spacing: 0 15px;
-            margin-left: 15px;
-		}
-		th, td {
-			padding: 10px;
-			text-align: center;
-			border: 1px solid black;
-		}
-		th {
-			background-color: #4CAF50;
-			color: white;
-		}
-		tr:nth-child(even) {
-			background-color: #f2f2f2;
-		}
-	</style>
-</head>
-<body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top"><img src="../static/assets/img/navbar-logo.svg" alt="..." /></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#allTutors">All Tutors</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!-- Masthead-->
+{% extends "base.html" %}
+
+{% block body_content %}
+    <!-- Masthead -->
     <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Welcome!</div>
+        <div class="container"><div class="user--info" >
+            <div class="masthead-subheading">Welcome {{ user.first_name }}!</div>
+        </div>
             <div class="masthead-heading text-uppercase">Classroom Connect Tutors</div>
             <a class="btn btn-primary btn-xl text-uppercase" href="">Schedule An Appointment</a>
         </div>
     </header> 
     <!--body-->
-<section class="page-section bg-light" id="appointment">
+
+    <section class="page-section bg-light" id="appointment">
         <div class="row" style="height:2000px">
             <div  class="col" style="height:auto; overflow:auto; border-right:5px solid black">
                 <h1 style="text-align:center">Appointments</h1>
@@ -85,21 +37,21 @@
             </div>
             <div class="col" style="height:500px; overflow:auto; ">
                 <h1 style="text-align:center">Favorite Tutors</h1>
-<!-- 
-    <div class="user--info" >
-        <h1>Hi {{ user.first_name }}!</h1>
-    </div>
--->
-</section>
 
+    <!-- 
+        <div class="user--info" >
+            <h1>Hi {{ user.first_name }}!</h1>
+        </div>
+    -->
+    </section>
 
     <section class="page-section bg-light" id="allTutors">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">All Tutors</h2>
-            <div style="text-align: center; height:100px">
+            <div class="tutor-search">
                 <form class="form-inline my-2 my-lg-0" method="GET" action="" style="margin:auto">
-                    <input type="search" placeholder="Search Tutor by name, ID, or subject" name="tutor_search" style="width:500px">
-                    <button type="submit"><i class="fa fa-search"></i></button>
+                    <input class="tutor-search-bar" type="search" placeholder="Search Tutor by name, ID, or subject" name="tutor_search">
+                    <button class="tutor-search-btn" type="submit"><i class="fa fa-search"></i></button>
                 </form>
             </div>
             <!--display all and search-->
@@ -110,12 +62,22 @@
                             <div class="Tutors">
                                 <img src="{{tutor.profile_pic}}">
                                 <b><h2 class="name">{{tutor.first_name}} {{tutor.last_name}}</h2></b>
-                                <h3 style="font-weight:normal">{{tutor.id}}</h3>
-                                <h3 style="font-weight:normal">{{tutor.email}}</h3>
-                                <h3 style="font-weight:normal">{{tutor.phone_number}}</h3>
-                                <h3 style="font-weight:normal">Subjects: {{tutor.subjects}}</h3>
+                                <h3>{{tutor.id}}</h3>
+                                <h3>{{tutor.email}}</h3>
+                                <h3>{{tutor.phone_number}}</h3>
+                                <h3 style="font-weight:normal">Subjects: </h3>
+                                  <p style="font-weight:normal">{{tutor.subjects}}</p>
+                                <h3 style="font-weight:normal">Availability: </h3>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Monday: {{tutor.monday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Tuesday: {{tutor.tuesday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Wednesday: {{tutor.wednesday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">thursday: {{tutor.thursday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Friday: {{tutor.friday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Saturday: {{tutor.saturday_time}}</p>
+                                  <p align="left" style="margin-left:95px; font-weight:normal">Sunday: {{tutor.sunday_time}}</p>
                                 <h3 style="font-weight:normal">Total Tutor Hours: {{tutor.total_hours}}</h3>
-                                <h3 style="font-weight:normal">Bio: {{tutor.bio}}</h3>
+                                <h3 style="font-weight:normal">Bio: </h3>
+                                  <p style="font-weight:normal">{{tutor.bio}}</p>
                                 <!--place holder for actual favorite button, not sure how to do it yet-->
                                 <input type="checkbox" id="Favorite">
                                 <label for="Favorite">Favorite</label>
@@ -124,8 +86,7 @@
                         </div>
                     </div>
                  {% endfor %}
-            </div>    
-        </div>
+                </div>
     </section>
     <!-- Footer-->
     <footer class="footer py-4">
@@ -144,7 +105,4 @@
             </div>
         </div>
     </footer>
-
-
-
-
+    {% endblock %}

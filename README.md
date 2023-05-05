@@ -1,12 +1,6 @@
-# TutoringApp
+# Classroom Connect Tutors - Online Tutoring Application - Project Team 12
 
-Hey guys, before commiting to this repo please make sure your changes work locally first.
+### How to Run: Windows
 
-
-Conventions:
-
-html -> login-page.html
-
-python functions -> login_function()
-
-python variables -> my_var
+1. Install and set up python, the version of python we used was Python 3.9.2 
+2. Download 

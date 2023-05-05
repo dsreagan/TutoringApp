@@ -44,7 +44,6 @@ def student_home():
     appt_found = Appointment.query.join(Tutor, Tutor.id == Appointment.tutor_id).filter(
         Appointment.student_id == current_user.get_id())
     # print(current_user.get_id())
-    # print(appt_found)
     tutorNames_found = Tutor.query.join(Appointment, Tutor.id == Appointment.tutor_id).filter(
         Appointment.student_id == current_user.get_id()).all()
     # print(tutorNames_found)

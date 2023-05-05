@@ -7,7 +7,7 @@
             <div class="masthead-subheading">Welcome {{ user.first_name }}!</div>
         </div>
             <div class="masthead-heading text-uppercase">Classroom Connect Tutors</div>
-            <a class="btn btn-primary btn-xl text-uppercase" href="">Schedule An Appointment</a>
+            <a class="btn btn-primary btn-xl text-uppercase" href="{{ url_for('auth.zoom') }}">Schedule An Appointment</a>
         </div>
     </header> 
     <!--body-->
@@ -29,7 +29,9 @@
                                 <td>{{ appt[0].date }}</td>
                                 <td>{{ appt[1]}}</td>
                                 <td>{{ appt[0].appointment_info }}</td>
-                                <td>{{ appt[0].zoom_link }}</td>
+                                {% if join_URL %}
+                                <td>{{ join_URL }}</td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </ul>

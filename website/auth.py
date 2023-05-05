@@ -6,11 +6,95 @@ from flask_login import login_user, login_required, logout_user, current_user
 from . import db
 import json
 import re
+import mimetypes
+import base64
+import io
 from datetime import datetime
-
+import jwt
+import requests
+from time import time
 
 auth = Blueprint('auth', __name__)
 
+@auth.route('/zoom',methods = ['POST', "GET"])
+def zoom():
+    decoded_data = 0
+    file_type = 0
+    appts_Table = request.args.get('appt_Table')
+    appt_found = Appointment.query.join(Tutor, Tutor.id == Appointment.tutor_id).filter(
+        Appointment.student_id == current_user.get_id())
+    # print(current_user.get_id())
+    # print(appt_found)
+    tutorNames_found = Tutor.query.join(Appointment, Tutor.id == Appointment.tutor_id).filter(
+        Appointment.student_id == current_user.get_id()).all()
+    # print(tutorNames_found)
+    JoinedRows = []
+    for appt in appt_found:
+        for tutor in tutorNames_found:
+            if tutor.id == appt.tutor_id:
+                JoinedRows.append(
+                    [appt, str(tutor.first_name + ' ' + tutor.last_name)])
+
+    tutor_search = request.args.get('tutor_search')
+    if tutor_search:
+        tutor_all = Tutor.query.filter(Tutor.first_name.contains(
+            tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search))
+    else:
+        tutor_all = Tutor.query.all()
+
+    for tutor in tutor_all:
+        user_id = tutor.id
+        user_row = Tutor.query.filter_by(id=user_id).first()
+        binary_data = user_row.profile_pic
+        file_obj = io.BytesIO(binary_data)
+        decoded_data = base64.b64encode(file_obj.read()).decode('utf-8')
+        file_type, encoding = mimetypes.guess_type(user_row.profile_picname)
+
+    tutor_search = request.args.get('tutor_search')
+    if tutor_search:
+        tutor_all = Tutor.query.filter(Tutor.first_name.contains(tutor_search) | Tutor.last_name.contains(tutor_search) | Tutor.id.contains(tutor_search))
+    else:
+        tutor_all = Tutor.query.all()
+    API_KEY = 'qecUpEX1SUGYDoNDH22qng'
+    API_SEC = 'FZxPYx6U2sBIwJUe3X7Nsr1mzMONgFipllnS'
+
+    token = jwt.encode(
+        {'iss': API_KEY, 'exp': time() + 5000},
+
+        API_SEC,
+        algorithm='HS256'
+    )
+
+    meetingdetails = {"topic": "Online Tutoring Appointment",
+                  "type": 2,
+                  "start_time": "2019-06-14T10: 21: 57",
+                  "duration": "45",
+                  "timezone": "Europe/Madrid",
+                  "agenda": "test",
+ 
+                  "recurrence": {"type": 1,
+                                 "repeat_interval": 1
+                                 },
+                  "settings": {"host_video": "true",
+                               "participant_video": "true",
+                               "join_before_host": "False",
+                               "mute_upon_entry": "False",
+                               "watermark": "true",
+                               "audio": "voip",
+                               "auto_recording": "cloud"
+                               }
+                  }
+    
+    headers = {'authorization': 'Bearer ' + token,
+               'content-type': 'application/json'}
+    r = requests.post(
+        f'https://api.zoom.us/v2/users/me/meetings',
+        headers=headers, data=json.dumps(meetingdetails))
+ 
+    y = json.loads(r.text)
+    join_URL = y["join_url"]
+    meetingPassword = y["password"]
+    return render_template("student-home.html", user = current_user, join_URL = join_URL, tutor_all=tutor_all, data=decoded_data, fileType=file_type, appointments=JoinedRows)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():

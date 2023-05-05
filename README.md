@@ -19,3 +19,5 @@ python main.py
 To execute the project (might need to use python3 instead of python)
 
 6. If done successfully, "Running on: http://127.0.0.1" Should appear, ctrl + click on the link and it should lead you to our project's webpage.
+
+![2023-05-05-18-02-31](https://user-images.githubusercontent.com/91645367/236582822-c0d75099-6b3a-4309-81fd-8b19a378cb1c.gif)
